@@ -12,7 +12,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
  * DATABASE *
  ************/
 
-// var db = require('./models');
+var db = require('./models');
+var controllers = require('./controllers/personal_api_controllers');
 
 /**********
  * ROUTES *
@@ -26,28 +27,41 @@ app.use(express.static('public'));
  * HTML Endpoints
  */
 
-app.get('/', function homepage(req, res) {
+app.get('/', function homepage (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+app.get('/profile', function profilePage (req, res) {
+  res.sendFile(__dirname + '/views/profile.html');
+});
+
+app.get('/artists', function favoriteArtistsPage (req, res) {
+  res.sendFile(__dirname + '/views/artists.html');
+});
 
 /*
  * JSON API Endpoints
  */
+app.get('/api/profile', function getProfileInfo (req, res) {
+  db.Profile.find({}, function (err, profile){
+    if (err) { res.json("Error while loading!", err);}
+    res.json(profile);
+  });
+});
 
-app.get('/api', function api_index(req, res) {
-  // TODO: Document all your api endpoints below
-  res.json({
-    woops_i_has_forgot_to_document_all_my_endpoints: true, // CHANGE ME ;)
-    message: "Welcome to my personal api! Here's what you need to know!",
-    documentation_url: "https://github.com/example-username/express_self_api/README.md", // CHANGE ME
-    base_url: "http://YOUR-APP-NAME.herokuapp.com", // CHANGE ME
-    endpoints: [
-      {method: "GET", path: "/api", description: "Describes all available endpoints"},
-      {method: "GET", path: "/api/profile", description: "Data about me"}, // CHANGE ME
-      {method: "POST", path: "/api/campsites", description: "E.g. Create a new campsite"} // CHANGE ME
-    ]
-  })
+app.get('/api/artists', function getArtistsInfo (req, res){
+  db.Artist.find({}, function (err, artists){
+    if (err) { res.json("Error while loading!", err);}
+    res.json(artists);
+  });
+});
+
+app.post('/api/artists', function createNewArtist (req, res){
+  var artist = req.body;
+  db.Artist.create(artist, function (err, newArtist){
+    if (err) { res.json("Error while loading!", err);}
+    res.json(newArtist);
+  });
 });
 
 /**********

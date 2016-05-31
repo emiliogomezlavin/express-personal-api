@@ -1,0 +1,61 @@
+JSON API Endpoint           Response JSON
+=============               =============
+GET /api/profile            {
+                              name: "Emilio Gomez Lavin",
+                              linkedin_link: "https://linkedin.com/in/emiliogomezlavin"
+                              github_link: "https://github.com/emiliogomezlavin",
+                              current_city: "San Francisco",
+                              pets: [ 
+                                { name: 'Maika', type: 'dog', breed: 'Unkwon (adopted street dog)' }, 
+                                { name: 'Lola', type:'dog', breed: 'Yorkshire Terrier' }
+                              ],
+                              favorite_drinks: [
+                                { name: 'Tequila', origin: 'Jalisco, Mexico', cocktail: 'Paloma'},
+                                { name: 'Gin', origin: 'Multiple origins', cocktail: 'Gin & Tonic'},
+                                { name: 'Mezcal', origin: 'Oaxaca, Mexico', cocktail: 'Straight'},
+                              ]
+                            }
+
+GET /api/artists            [
+                             {
+                                _id: 1,
+                                name: 'The Beatles',
+                                country: 'UK',
+                                years: '1960 - 1970',
+                                genres: [ 'rock', 'pop'],
+                                top_songs: [ 'Hey Jude', 'Yesterday', 'Something'],
+                                on_tour: false
+                             },
+                             { 
+                                _id: 2,
+                                name: 'Queen',
+                                country: 'UK',
+                                years: '1970 - present',
+                                genres: [ 'rock'],
+                                top_songs: [ 'Bohemian Raphsody', 'Under Pressure', 'Somebody To Love'],
+                                on_tour: true
+                             }
+                            ]
+
+POST /api/artists           {
+                                _id: Number,
+                                name: String,
+                                country: String,
+                                years: String,
+                                genres: [ String ],
+                                top_songs: [ String ],
+                                on_tour: Boolean
+                            }
+
+PUT /api/artists/2         etc
+DELETE /api/artists/2      etc                           
+
+GET /api/projects?limit=1   [ { _id: 2, name:'Defeat...' } ]
+
+GET /api/projects?status=pending
+                            [ { _id: 3, name:'Save...' } ]                                
+GET /api/projects/2         { _id: 2, name:'Defeat...' }
+
+POST /api/projects          etc
+PUT /api/projects/2         etc
+DELETE /api/projects/2      etc
